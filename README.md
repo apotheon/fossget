@@ -22,3 +22,8 @@ In order from most preferred to least preferred:
 
 * Write code.
 * Incorporate this functionality into FossRec, a more comprehensive tool.
+
+## Next Steps
+
+1. Write a test.
+2. Write library code to satisfy the test.
