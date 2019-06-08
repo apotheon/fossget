@@ -1,88 +1,12 @@
 #!/usr/bin/env ruby
+require 'fossget/cli'
+require 'fossget/config'
 require 'fileutils'
-require 'yaml'
 
-class Config
-  attr_reader :config
-  attr_writer :file
-
-  def initialize
-    @file = File.new Dir.home, '.fossget'
-
-    if exist?
-      @config = load
-    else
-      @config = Hash.new
-    end
-  end
-
-  def exist?
-    File.exist? file
-  end
-
-  def load
-    YAML.load_file file
-  end
-
-  def dir
-    File.expand_path @config[:dirpath]
-  end
-
-  def dir= dirpath
-    @config[:dirpath] = dirpath
-  end
-
-  def file
-    File.expand_path @file
-  end
-
-  def repo
-    File.expand_path @config[:repopath]
-  end
-
-  def repo= repopath
-    @config[:repopath] = repopath
-  end
-
-  def user
-    @config[:username]
-  end
-
-  def user= username
-    @config[:username] = username
-  end
-end
-
-usage_text = 'USAGE: fossget <COMMAND> [ARGUMENTS]'
-
-help_text = <<-EOF.gsub /^  /, ''
-  COMMANDS:
-
-      help      Display this help text.
-
-      config    Perform initial configuration of defaults.
-
-                This provides a guided process for configuring user defaults,
-                including FossRec username, the directory where you store
-                Fossil repository files, the directory where you store Fossil
-                project checkout directories, whether to use the same password
-                for a repository's local username as for the FossRec username
-                used to clone the repository
-
-      clone clone <PROJECT> [PATH]
-
-                Clone a repository from FossRec.
-
-                PROJECT:  Specify the project name.
-                PATH:     Optionally, specify a nonstandard checkout path.
-EOF
-
-else_text = 'Please provide a valid command.  Try "fossget help".'
-
-config = Config.new
+@config = Config.new
 
 def print_config
-  @config.keys.each do |key|
+  config.keys.each do |key|
     puts "  #{key}: #{@config[key]}"
   end
 end
@@ -110,9 +34,9 @@ end
 case ARGV.shift
 when 'help'
   puts
-  puts usage_text
+  puts CLI.usage_text
   puts
-  puts help_text
+  puts CLI.help_text
   puts
 when 'config'
   if @config.keys.size > 0
@@ -126,15 +50,15 @@ when 'config'
   puts
 
   print 'FossRec Username: '
-  @config[:username] = gets.chomp
+  @config.user = gets.chomp
 
   print 'Local Repository Directory: '
-  @config[:repopath] = gets.chomp
+  @config.repo = gets.chomp
 
   print 'Local Checkout Directory: '
-  @config[:dirpath] = gets.chomp
+  @config.dir = gets.chomp
 
-  @config[:samepass] = get_boolean 'Use FossRec Password Locally'
+  @config.samepass = get_boolean 'Use FossRec Password Locally'
 
   puts 'This is your new configuration.'
   print_config
@@ -143,7 +67,7 @@ when 'config'
 
   case reasonable
   when 'y'
-    File.open("#{Dir.home}/.fossget", 'w') {|f| f.write @config.to_yaml }
+    @config.save
     puts 'Configuration saved.'
   when 'n'
     puts 'Configuration aborted.  No changes have been made.'
@@ -169,6 +93,6 @@ when 'clone'
   FileUtils.cd checkout_path
   system open_cmd
 else
-  puts usage_text
-  puts else_text
+  puts CLI.usage_text
+  puts CLI.else_text
 end
