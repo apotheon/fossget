@@ -18,7 +18,7 @@ class CLI
                     for a repository's local username as for the FossRec username
                     used to clone the repository
 
-          clone clone <PROJECT> [PATH]
+          clone <PROJECT> [PATH]
 
                     Clone a repository from FossRec.
 
