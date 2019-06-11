@@ -85,6 +85,12 @@ when 'clone'
   pass_cmd = "fossil user password #{user} -R #{repo_file_path}"
   open_cmd = "fossil open #{repo_file_path}"
 
+  # Rewrite the following so it first checks whether there is a configured
+  # upstream, then pushes to it if it exists.  Later, alter it so it checks for
+  # more than just the default upstream, and pushes to all of them.  Also add a
+  # configuration option that allows for control oveer whether and how it
+  # auto-pushes.
+
   puts checkout_path
   system clone_cmd
   system pass_cmd
