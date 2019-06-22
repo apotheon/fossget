@@ -53,4 +53,12 @@ class Config
   def user= username
     config[:username] = username
   end
+
+  def info
+    config[:info]
+  end
+
+  def info= info_value
+    config[:info] = info_value
+  end
 end
