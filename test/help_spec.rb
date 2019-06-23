@@ -15,7 +15,7 @@ describe CLI do
     it 'returns help text' do
       CLI.help_text.must_match 'config    Perform initial configuration of'
       CLI.help_text.must_match 'This provides a guided process for configuring'
-      CLI.help_text.must_match 'clone clone <PROJECT> [PATH]'
+      CLI.help_text.must_match 'clone <PROJECT> [PATH]'
     end
   end
 end
