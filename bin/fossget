@@ -53,7 +53,7 @@ when 'config'
   @config.user = gets.chomp
 
   print 'FossRec User Info: '
-  @config.user = gets.chomp
+  @config.info = gets.chomp
 
   print 'Local Repository Directory: '
   @config.repo = gets.chomp
