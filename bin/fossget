@@ -31,6 +31,18 @@ def confirm_config question_text
   end
 end
 
+def update_db repo_file_path, table, datum, filter
+  `sqlite3 #{repo_file_path} "update #{table} set #{datum} where #{filter}"`
+end
+
+def update_user repo_file_path, field, value, user
+  update_db repo_file_path, 'user', "#{field}='#{value}'", "login='#{user}'"
+end
+
+def set_user_info repo_file_path, new_info, user
+  update_user repo_file_path, 'info', new_info, user
+end
+
 case ARGV.shift
 when 'help'
   puts
@@ -91,6 +103,10 @@ when 'clone'
   puts checkout_path
   system clone_cmd
   system pass_cmd
+
+  if @config.info
+    set_user_info repo_file_path, @config.info, user
+  end
 
   FileUtils.mkdir checkout_path
   FileUtils.cd checkout_path
