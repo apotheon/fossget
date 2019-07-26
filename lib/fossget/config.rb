@@ -1,11 +1,10 @@
 require 'yaml'
 
 class Config
-  attr_reader :config
-  attr_writer :filename
+  attr_reader :config, :filename
 
-  def initialize
-    @filename = File.new Dir.home, '.fossget'
+  def initialize file='.fossget'
+    @filename = File.join Dir.home, file
 
     @config = file_exists? ? load_file : Hash.new
   end
