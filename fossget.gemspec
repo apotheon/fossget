@@ -1,4 +1,4 @@
-load 'lib/fossgit.rb'
+load 'lib/fossget.rb'
 
 Gem::Specification.new do |s|
   s.name        = 'fossget'
