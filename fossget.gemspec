@@ -14,8 +14,8 @@ Gem::Specification.new do |s|
     'LICENSE',
     'README.md',
     'lib/fossget.rb',
-    'lib/fossgit/cli.rb',
-    'lib/fossgit/config.rb'
+    'lib/fossget/cli.rb',
+    'lib/fossget/config.rb'
   ]
   s.homepage    = 'https://fossrec.com/u/apotheon/fossget'
   s.license     = 'COIL'
