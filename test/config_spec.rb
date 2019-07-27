@@ -9,4 +9,9 @@ describe Config do
     conf = Config.new '.file_does_not_exist'
     refute conf.file_exists?
   end
+
+  it 'reports keys' do
+    conf = Config.new '.fossget'
+    assert conf.keys.class.eql? Array
+  end
 end
