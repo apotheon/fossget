@@ -9,6 +9,10 @@ class Config
     @settings = file_exists? ? load_file : Hash.new
   end
 
+  def keys
+    settings.keys
+  end
+
   def file_exists?
     File.exist? file
   end
