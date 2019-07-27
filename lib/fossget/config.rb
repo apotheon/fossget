@@ -1,12 +1,12 @@
 require 'yaml'
 
 class Config
-  attr_reader :config, :filename
+  attr_reader :settings, :filename
 
   def initialize file='.fossget'
     @filename = File.join Dir.home, file
 
-    @config = file_exists? ? load_file : Hash.new
+    @settings = file_exists? ? load_file : Hash.new
   end
 
   def file_exists?
@@ -18,11 +18,11 @@ class Config
   end
 
   def dir
-    File.expand_path config[:dirpath]
+    File.expand_path settings[:dirpath]
   end
 
   def dir= dirpath
-    config[:dirpath] = dirpath
+    settings[:dirpath] = dirpath
   end
 
   def file
@@ -30,34 +30,34 @@ class Config
   end
 
   def repo
-    File.expand_path config[:repopath]
+    File.expand_path settings[:repopath]
   end
 
   def repo= repopath
-    config[:repopath] = repopath
+    settings[:repopath] = repopath
   end
 
   def samepass= confirmation
-    config[:samepass] = confirmation
+    settings[:samepass] = confirmation
   end
 
   def save
-    File.open("#{Dir.home}/.fossget", 'w') {|f| f.write config.to_yaml }
+    File.open("#{Dir.home}/.fossget", 'w') {|f| f.write settings.to_yaml }
   end
 
   def user
-    config[:username]
+    settings[:username]
   end
 
   def user= username
-    config[:username] = username
+    settings[:username] = username
   end
 
   def info
-    config[:info]
+    settings[:info]
   end
 
   def info= info_value
-    config[:info] = info_value
+    settings[:info] = info_value
   end
 end
