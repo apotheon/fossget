@@ -6,8 +6,8 @@ require 'fileutils'
 @config = Config.new
 
 def print_config
-  config.keys.each do |key|
-    puts "  #{key}: #{@config[key]}"
+  @config.settings.keys.each do |key|
+    puts "  #{key}: #{@config.settings[key]}"
   end
 end
 
@@ -51,7 +51,7 @@ when 'help'
   puts CLI.help_text
   puts
 when 'config'
-  if @config.keys.size > 0
+  if @config.settings.keys.size > 0
     puts 'This is your current saved config:'
     print_config
     puts 'This operation will overwrite your current saved config.'
